@@ -23,6 +23,20 @@ class _InterestsState extends State<Interests> {
 
   bool _progressBarActive = true;
 
+  var padValue = 0;
+
+  void _addPadValue(int padCount) {
+    setState(() =>
+    padValue = padCount+padValue,
+    );
+    print(padValue);
+  }
+  void _removePadValue(int padCount) {
+    setState(() =>
+    padValue = padValue -padCount,
+    );
+    print(padValue);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,15 +103,15 @@ class _InterestsState extends State<Interests> {
                     spacing: 5.0,
                     runSpacing: 3.0,
                     children: [
-                      filterChipWidget(chipName: 'Buddhism',),
-                      filterChipWidget(chipName: 'Hinduism',),
-                      filterChipWidget(chipName: 'Christianity',),
-                      filterChipWidget(chipName: 'Chinese Tradional Religion',),
-                      filterChipWidget(chipName: 'African Tradional Religion',),
-                      filterChipWidget(chipName: 'Christianity',),
-                      filterChipWidget(chipName: 'Buddhism',),
-                      filterChipWidget(chipName: 'Hinduism',),
-                      filterChipWidget(chipName: 'Christianity',)
+                      filterChipWidget(chipName: 'Buddhism', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Hinduism', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Christianity', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Chinese Tradional Religion', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'African Tradional Religion', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Christianity', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Buddhism', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Hinduism', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Christianity', addPad:_addPadValue, removePad:_removePadValue)
                     ],
                   ),
                 ],
@@ -118,12 +132,12 @@ class _InterestsState extends State<Interests> {
                     spacing: 5.0,
                     runSpacing: 3.0,
                     children: [
-                      filterChipWidget(chipName: 'Item Name',),
-                      filterChipWidget(chipName: 'Item Name',),
-                      filterChipWidget(chipName: 'Item Name',),
-                      filterChipWidget(chipName: 'Item Name',),
-                      filterChipWidget(chipName: 'Item Name',),
-                      filterChipWidget(chipName: 'Item Name',),
+                      filterChipWidget(chipName: 'Item Name', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Item Name', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Item Name', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Item Name', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Item Name', addPad:_addPadValue, removePad:_removePadValue),
+                      filterChipWidget(chipName: 'Item Name', addPad:_addPadValue, removePad:_removePadValue),
                     ],
                   ),
                 ],
@@ -191,49 +205,64 @@ class _InterestsState extends State<Interests> {
 
               SizedBox(height: 20.0,),
 
-              TweenAnimationBuilder(
-                tween: Tween(begin:0.0, end: 1.0), 
-                duration: Duration(seconds: 4), 
-                builder: (context, value, child) {
-                  return Container(
-                    width: 100,
-                    height: 100,
-                    child: Stack(
-                      children: [
-                        ShaderMask(
-                          shaderCallback: (rect) {
-                            return SweepGradient(
-                              startAngle: 0.0,
-                              stops: [value, value],
-                              endAngle: TWO_PI,
-                              center: Alignment.center,
-                              colors: [Colors.blue, Colors.grey.withAlpha(55)]
-                            ).createShader(rect);
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                }
-              )
+              MyFillingContainer(
+                progress: padValue/4,
+                size: 100,
+                backgroundColor: Colors.grey,
+                progressColor: Colors.blue,
+              ),
+              RaisedButton(
+                child: Text('Fill'),
+                onPressed: () {
+                  setState(() {
+                    padValue = padValue + 1;
+                  });
+                },
+              ),
+
+              // TweenAnimationBuilder(
+              //   tween: Tween(begin:0.0, end: 1.0),
+              //   duration: Duration(seconds: 4),
+              //   builder: (context, value, child) {
+              //     return Container(
+              //       width: 100,
+              //       height: 100,
+              //       child: Stack(
+              //         children: [
+              //           ShaderMask(
+              //             shaderCallback: (rect) {
+              //               return SweepGradient(
+              //                 startAngle: 0.0,
+              //                 stops: [value, value],
+              //                 endAngle: TWO_PI,
+              //                 center: Alignment.center,
+              //                 colors: [Colors.blue, Colors.grey.withAlpha(55)]
+              //               ).createShader(rect);
+              //             },
+              //             child: Container(
+              //               width: 100,
+              //               height: 100,
+              //               decoration: BoxDecoration(
+              //                 shape: BoxShape.circle,
+              //                 color: Colors.white,
+              //               ),
+              //             ),
+              //           ),
+              //           Center(
+              //             child: Container(
+              //               width: 80,
+              //               height: 80,
+              //               decoration: BoxDecoration(
+              //                 color: Colors.white,
+              //                 shape: BoxShape.circle
+              //               ),
+              //             ),
+              //           )
+              //         ],
+              //       ),
+              //     );
+              //   }
+              // )
               
             ],
           ),
@@ -271,6 +300,45 @@ class _InterestsState extends State<Interests> {
       ],
       centerTitle: true,
       title: Text("SuntechIT", style: TextStyle(fontSize: 20.0, color: kTextColor),),
+    );
+  }
+}
+
+
+class MyFillingContainer extends StatelessWidget {
+  final double progress;
+  final double size;
+  final Color backgroundColor;
+  final Color progressColor;
+  const MyFillingContainer(
+      {Key key,
+        this.progress,
+        this.size,
+        this.backgroundColor,
+        this.progressColor})
+      : super(key: key);
+  @override
+
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(size),
+      child: SizedBox(
+        height: size,
+        width: size,
+        child: Stack(
+            children: [
+              Container(
+                color: backgroundColor,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: size * progress,
+                  color: progressColor,
+                ),
+              )
+            ]),
+      ),
     );
   }
 }

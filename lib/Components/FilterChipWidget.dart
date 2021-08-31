@@ -4,8 +4,10 @@ import '../constants.dart';
 
 class filterChipWidget extends StatefulWidget{
   final String chipName;
+  final ValueChanged<int> addPad;
+  final ValueChanged<int> removePad;
 
-  const filterChipWidget({Key key, this.chipName}) : super(key: key);
+  const filterChipWidget({Key key, this.chipName, this.addPad, this.removePad}) : super(key: key);
 
   @override
   _filterChipWidgetState createState() => _filterChipWidgetState();
@@ -39,6 +41,11 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       onSelected: (isSelected) {
         setState(() {
           _isSelected = isSelected;
+          if(isSelected){
+            widget.addPad(1);
+          } else{
+            widget.removePad(1);
+          }
         });
       },
       
